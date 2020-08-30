@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { Dimmer, Loader, Grid } from "semantic-ui-react";
+import { Dimmer, Loader, Grid, Message } from "semantic-ui-react";
 
 import TableSection from "../components/TableSection";
 import NewUserForm from "../components/NewUserForm";
@@ -108,14 +108,23 @@ function DashboardScreen() {
       </Dimmer>
     );
   } else {
-    tableSection = (
-      <TableSection
-        users={users}
-        editUser={onClickEditUser}
-        cancelEdit={cancelEdit}
-        deleteUser={handleDeleteUser}
-      />
-    );
+    if (users.length > 0) {
+      tableSection = (
+        <TableSection
+          users={users}
+          editUser={onClickEditUser}
+          cancelEdit={cancelEdit}
+          deleteUser={handleDeleteUser}
+        />
+      );
+    } else {
+      tableSection = (
+        <Message
+          header="Lista Vacia"
+          content="Por favor agregue usuarios para mostrar."
+        />
+      );
+    }
   }
 
   return (
